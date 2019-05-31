@@ -1,0 +1,32 @@
+#!/usr/bin/expect
+set timeout 10
+
+set device [lindex $argv 0]
+set address [lindex $argv 1]
+
+set nfs_share "<ip>:/nfs_share/$device"
+set content "<ip>:/home/content/"
+
+set prompt "*#"
+set login "\r"
+
+if { $device == "" } {
+    set prompt "*login:"
+    set login "root\r"
+}
+
+spawn telnet $address
+expect {
+    timeout { send_user "\nFailed to get password prompt\n"; exit 1 }
+    eof { send_user "\nTELNET failure for $address\n"; exit 1 }
+    "$prompt" { send "$login" }
+}
+
+if { $device == "" } {
+    send "<some_command_to_execute>\r"
+}
+
+send "mkdir -p /tmp/nfs; mount -o nolock,rsize=4096,wsize=4096 \"$nfs_share\" /tmp/nfs; mkdir -p /tmp/web; mount -o nolock,ro \"$content\" /tmp/web;\r"
+send "cd /tmp/nfs\r"
+
+interact
