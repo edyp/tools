@@ -8,4 +8,4 @@ Removes 10 first characters from every line in a file.
 Expect script for telneting and preparing a device to working/developing on it.
 - telnet to device
 - mount nfs
-- Execute something if needed
+- execute something if needed
