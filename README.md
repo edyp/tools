@@ -10,6 +10,7 @@ Expect script for telneting and preparing a device to working/developing on it.
 - telnet to device
 - mount nfs
 - execute something if needed
+
 **logs_downloader.sh**  
 Download logs from jenkins.  
 **get_timestamps_from_log.py** 
